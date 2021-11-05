@@ -13,24 +13,24 @@ console.log("[db] Connecting to:", database);
 // SELECT to get a total number of signers
 
 module.exports.insertSignatureName = (
-    userSignature,
     userFirstName,
-    userLastName
+    userLastName,
+    userSignature
 ) => {
-    const q = `INSERT INTO setup (signature, first, last)
+    const q = `INSERT INTO signatures (first, last, signature)
                 VALUES($1, $2, $3)`;
-    const params = [userSignature, userFirstName, userLastName];
+    const params = [userFirstName, userLastName, userSignature];
     return db.query(q, params);
 };
 
-module.exports.selectFirstandLast = (userFirstName, userLastName) => {
-    const q = `SELECT (first, last) FROM setup`;
-    const params = [userFirstName, userLastName];
-    return db.query(q, params);
+module.exports.selectFirstandLast = () => {
+    const q = `SELECT first, last FROM signatures`;
+    return db.query(q);
 };
 
 //COUNT(*) returns the number of rows in a specified table, and it preserves duplicate rows.( SQL COUNT function to get the number of items in a group)
 
 module.exports.totalNum = () => {
-    return db.query("SELECT COUNT(*) FROM signatures");
+    const q = `SELECT COUNT(*) FROM signatures`;
+    return db.query(q);
 };
