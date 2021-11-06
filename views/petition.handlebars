@@ -15,10 +15,10 @@
         placeholder="Last Name"
         autocomplete="off"
     />
-    {{errorM}}
+    {{>errorM}}
 
     <canvas id="canvas" width="200" height="200"></canvas>
-    <input type="visible" name="signature" />
+    <input type="hidden" name="signature" id="signature"/>
     <div>
         <span>Sign here </span>
     </div>

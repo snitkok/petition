@@ -3,21 +3,18 @@
     const ctx = canvas.getContext("2d");
     const signature = document.getElementById("signature");
 
-    //Add default mouse position
+    //Add mouse coordinates
 
     let coord = { x: 0, y: 0 };
 
-    //Functions
-    let start = (event) => {
-        canvas.addEventListener("mousemove", pencil);
-        changePosition(event);
-        // const signatureUrl = canvas.toDataURL;
-        // signature.value = signatureUrl;
-    };
+    // Functions
+
+    // call canvas. getBoundingClientRect() and subtract the left from clientX and top from clientY
 
     let changePosition = (event) => {
-        coord.x = event.clientX - canvas.offsetLeft;
-        coord.y = event.clientY - canvas.offsetTop;
+        const rect = canvas.getBoundingClientRect();
+        coord.x = event.clientX - rect.left;
+        coord.y = event.clientY - rect.top;
         console.log("event", event);
     };
 
@@ -26,7 +23,13 @@
     };
 
     //Mouseevents
-    canvas.addEventListener("mousedown", start);
+    canvas.addEventListener("mousedown", function (event) {
+        canvas.addEventListener("mousemove", pencil);
+        changePosition(event);
+        const signatureUrl = canvas.toDataURL;
+        signature.value = signatureUrl;
+    });
+
     canvas.addEventListener("mouseup", stop);
 
     //"Pencil tool"
@@ -43,33 +46,3 @@
         ctx.closePath();
     };
 })();
-
-// Check if the user is drawing or not
-// let drawing = false;
-// //Add mousedown
-
-// canvas.addEventListener("mousedown", (e) => {
-//     if (drawing == true) {
-//         pencil(ctx, a, b, e.offsetX, e.offsetY);
-//         mousePosX = e.offsetX;
-//         mousePosY = e.offsetY;
-//     }
-// });
-
-// //Add mouseup
-// canvas.addEventListener("mouseup", (e) => {
-//     if (drawing == true) {
-//         pencil(ctx, a, b, e.offsetX, e.offsetY);
-//         mousePosX = e.offsetX;
-//         mousePosY = e.offsetY;
-//     }
-// });
-
-// //Add mousemove
-// canvas.addEventListener("mousemove", (e) => {
-//     if (drawing == true) {
-//         pencil(ctx, a, b, e.offsetX, e.offsetY);
-//         mousePosX = e.offsetX;
-//         mousePosY = e.offsetY;
-//     }
-// });
