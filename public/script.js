@@ -18,19 +18,19 @@
         console.log("event", event);
     };
 
-    let stop = (event) => {
-        canvas.removeEventListener("mousemove", pencil);
-    };
-
     //Mouseevents
     canvas.addEventListener("mousedown", function (event) {
         canvas.addEventListener("mousemove", pencil);
         changePosition(event);
-        const signatureUrl = canvas.toDataURL;
-        signature.value = signatureUrl;
     });
 
-    canvas.addEventListener("mouseup", stop);
+    // canvas.addEventListener("mouseup", stop);
+
+    canvas.addEventListener("mouseup", function () {
+        canvas.removeEventListener("mousemove", pencil);
+        const signatureUrl = canvas.toDataURL();
+        signature.value = signatureUrl;
+    });
 
     //"Pencil tool"
 
@@ -43,6 +43,6 @@
         changePosition(event);
         ctx.lineTo(coord.x, coord.y);
         ctx.stroke();
-        ctx.closePath();
+        // ctx.closePath();
     };
 })();

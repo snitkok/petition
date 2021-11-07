@@ -18,7 +18,9 @@ module.exports.insertSignatureName = (
     userSignature
 ) => {
     const q = `INSERT INTO signatures (first, last, signature)
-                VALUES($1, $2, $3)`;
+                VALUES($1, $2, $3)
+                RETURNING id`;
+
     const params = [userFirstName, userLastName, userSignature];
     return db.query(q, params);
 };
@@ -32,5 +34,12 @@ module.exports.selectFirstandLast = () => {
 
 module.exports.totalNum = () => {
     const q = `SELECT COUNT(*) FROM signatures`;
+    return db.query(q);
+};
+
+module.exports.selectSignature = (val) => {
+    //don't forget to add an argument here
+    const q = `SELECT signature FROM signatures
+    WHERE id = ${val}`;
     return db.query(q);
 };
