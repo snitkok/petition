@@ -1,7 +1,9 @@
 <h2>Please sign our petition</h2>
+<div class="wrapper">
 <form
     method="POST"
     style="display: flex; flex-direction: column; justify-content: space-between; width: 40%; height: 50%;"
+    class="item1"
 >
     <input
         type="text"
@@ -15,13 +17,17 @@
         placeholder="Last Name"
         autocomplete="off"
     />
+
     {{>errorM}}
 
-    <canvas id="canvas" width="200" height="200"></canvas>
+    <canvas id="canvas" ></canvas>
     <input type="hidden" name="signature" id="signature"/>
     <div>
         <span>Sign here </span>
     </div>
     <button> submit </button>
+    
 </form>
+ <img src="./photo-1583968300292-46b9da50309d.jpeg" class="item2" id="imagePet" width="340" height="400">
+ </div>
 <script src="/script.js"></script>
