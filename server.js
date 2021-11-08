@@ -33,17 +33,29 @@ app.use((req, res, next) => {
     next();
 });
 
+//Does not work
+
+// app.get("/petition", (req, res) => {
+//     db.checkSign(req.session.signatureId) //added this part here || req.session.signatureId???
+//         .then(() => {
+//             res.redirect("/thanks");
+//         })
+//         .catch((err) => {
+//             console.log("err in GET/petition", err);
+//             res.render("petition", {
+//                 layout: "main",
+//             });
+//         });
+// });
+
 app.get("/petition", (req, res) => {
-    db.checkSign(req.session.signatureId) //added this part here || req.session.signatureId???
-        .then(() => {
-            res.redirect("/thanks");
-        })
-        .catch((err) => {
-            console.log("err in GET/petition", err);
-            res.render("petition", {
-                layout: "main",
-            });
+    if (req.session.signatureId) {
+        res.redirect("/thanks");
+    } else {
+        res.render("petition", {
+            layout: "main",
         });
+    }
 });
 
 app.post("/petition", (req, res) => {
@@ -68,15 +80,18 @@ app.post("/petition", (req, res) => {
 
 app.get("/thanks", (req, res) => {
     if (req.session.signatureId) {
+        console.log("req.session.signatureId", req.session.signatureId);
         Promise.all([
             db.totalNum(),
             db.selectSignature(req.session.signatureId), //// change here to req.session.userId????
         ])
             .then((val) => {
+                console.log("val in GET /Thanks ************************", val);
+                console.log("val[0].rows in GET /Thanks ************************", val[0].rows);
                 res.render("thanks", {
                     layout: "main",
-                    total: val[0].rows[0].count, //
-                    userSig: val[1].rows[0].signature, //
+                    total: val[0].rows[0].count,
+                    // userSig: val[1].rows[0].signature,
                 });
             })
             .catch((err) => {

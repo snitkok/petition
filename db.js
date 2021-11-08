@@ -8,10 +8,6 @@ const db = spicedPg(
 );
 console.log("[db] Connecting to:", database);
 
-//INSERT the user's signature and name
-// SELECT first and last names of every signer
-// SELECT to get a total number of signers
-
 module.exports.insertSignatureName = (userId, userSignature) => {
     const q = `INSERT INTO signatures (user_id, signature)
                 VALUES($1, $2)
@@ -62,6 +58,8 @@ module.exports.selectEmail = (val) => {
     const params = [val];
     return db.query(q, params);
 };
+
+//Doesn't work
 
 module.exports.checkSign = (userId) => {
     const q = `SELECT * FROM signatures
