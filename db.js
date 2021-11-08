@@ -12,21 +12,16 @@ console.log("[db] Connecting to:", database);
 // SELECT first and last names of every signer
 // SELECT to get a total number of signers
 
-module.exports.insertSignatureName = (
-    userFirstName,
-    userLastName,
-    userSignature
-) => {
-    const q = `INSERT INTO signatures (first, last, signature)
-                VALUES($1, $2, $3)
+module.exports.insertSignatureName = (userId, userSignature) => {
+    const q = `INSERT INTO signatures (user_id, signature)
+                VALUES($1, $2)
                 RETURNING id`;
-
-    const params = [userFirstName, userLastName, userSignature];
+    const params = [userId, userSignature];
     return db.query(q, params);
 };
 
 module.exports.selectFirstandLast = () => {
-    const q = `SELECT first, last FROM signatures`;
+    const q = `SELECT first, last FROM users`;
     return db.query(q);
 };
 
@@ -37,9 +32,40 @@ module.exports.totalNum = () => {
     return db.query(q);
 };
 
-module.exports.selectSignature = (val) => {
+module.exports.selectSignature = (userId) => {
     //don't forget to add an argument here
     const q = `SELECT signature FROM signatures
-    WHERE id = ${val}`;
-    return db.query(q);
+    WHERE user_id = $1`;
+    const params = [userId];
+    return db.query(q, params);
+};
+
+// Part 3
+module.exports.insertRegisterData = (
+    userFirstName,
+    userLastName,
+    userEmail,
+    userPassword
+) => {
+    const q = `INSERT INTO users (first, last, email, password)
+                VALUES($1, $2, $3, $4)
+                RETURNING id`;
+
+    const params = [userFirstName, userLastName, userEmail, userPassword];
+    return db.query(q, params);
+};
+
+module.exports.selectEmail = (val) => {
+    //don't forget to add an argument here
+    const q = `SELECT password, id FROM users
+    WHERE email = $1`;
+    const params = [val];
+    return db.query(q, params);
+};
+
+module.exports.checkSign = (userId) => {
+    const q = `SELECT * FROM signatures
+    WHERE user_id = $1`;
+    const params = [userId];
+    return db.query(q, params);
 };
