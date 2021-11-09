@@ -17,7 +17,7 @@ module.exports.insertSignatureName = (userId, userSignature) => {
 };
 
 module.exports.selectFirstandLast = () => {
-    const q = `SELECT first, last FROM users`;
+    const q = `SELECT first, last FROM users`; //from users PART2
     return db.query(q);
 };
 
@@ -28,11 +28,11 @@ module.exports.totalNum = () => {
     return db.query(q);
 };
 
-module.exports.selectSignature = (userId) => {
+module.exports.selectSignature = (id) => {
     //don't forget to add an argument here
     const q = `SELECT signature FROM signatures
-    WHERE user_id = $1`;
-    const params = [userId];
+    WHERE id = $1`;
+    const params = [id];
     return db.query(q, params);
 };
 
@@ -57,6 +57,11 @@ module.exports.selectEmail = (val) => {
     WHERE email = $1`;
     const params = [val];
     return db.query(q, params);
+};
+
+//New query
+module.exports.addProfile = () => {
+    return db.query();
 };
 
 //Doesn't work

@@ -91,7 +91,7 @@ app.get("/thanks", (req, res) => {
                 res.render("thanks", {
                     layout: "main",
                     total: val[0].rows[0].count,
-                    // userSig: val[1].rows[0].signature,
+                    userSig: val[1].rows[0].signature,
                 });
             })
             .catch((err) => {
@@ -174,6 +174,7 @@ app.post("/login", (req, res) => {
                 .then((match) => {
                     console.log("are the passwords a match??? ==>", match);
                     if (match) {
+                        //here db.checkSign() //Part4
                         req.session.userId = val.rows[0].id;
                         res.redirect("/petition");
                     } else {
@@ -196,6 +197,9 @@ app.post("/login", (req, res) => {
         });
 });
 
+
+//New routes
+
 // get the user's stored hashed password from the db using the user's email address
 // pass the hashed password to COMPARE along with the password the user typed in the input field
 // if they match, COMPARE returns a boolean value of TRUE
@@ -204,7 +208,7 @@ app.post("/login", (req, res) => {
 //Log out
 app.get("/logout", (req, res) => {
     req.session = null;
-    res.redirect("/petition");
+    res.redirect("/login");
 });
 
 app.listen(8080, () => console.log("Petition server, listening 🦻"));

@@ -1,75 +1,21 @@
-(function () {
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    const signature = document.getElementById("signature");
+const { urlencoded } = require("body-parser");
+const { appendFile } = require("fs");
 
-    //Add default mouse position
+const parsedAge = Number.parseInt(age);
+if (url.startsWith(http){
+    res.render(console.error())
+}
 
-    let coord = { x: 0, y: 0 };
 
-    //Functions
-    let start = (event) => {
-        canvas.addEventListener("mousemove", pencil);
-        changePosition(event);
-        // const signatureUrl = canvas.toDataURL;
-        // signature.value = signatureUrl;
-    };
+before adding city information make all lower case;
 
-    let changePosition = (event) => {
-        coord.x = event.clientX - canvas.offsetLeft;
-        coord.y = event.clientY - canvas.offsetTop;
-        console.log("event", event);
-    };
+//or 
+//best option
+WHERE LOWER(profiles.city) = LOWER("$");
 
-    let stop = (event) => {
-        canvas.removeEventListener("mousemove", pencil);
-    };
 
-    //Mouseevents
-    canvas.addEventListener("mousedown", start);
-    canvas.addEventListener("mouseup", stop);
-
-    //"Pencil tool"
-
-    let pencil = (event) => {
-        ctx.beginPath();
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 2;
-        ctx.lineCap = "round";
-        ctx.moveTo(coord.x, coord.y);
-        changePosition(event);
-        ctx.lineTo(coord.x, coord.y);
-        ctx.stroke();
-        ctx.closePath();
-    };
-})();
-
-// Check if the user is drawing or not
-// let drawing = false;
-// //Add mousedown
-
-// canvas.addEventListener("mousedown", (e) => {
-//     if (drawing == true) {
-//         pencil(ctx, a, b, e.offsetX, e.offsetY);
-//         mousePosX = e.offsetX;
-//         mousePosY = e.offsetY;
-//     }
-// });
-
-// //Add mouseup
-// canvas.addEventListener("mouseup", (e) => {
-//     if (drawing == true) {
-//         pencil(ctx, a, b, e.offsetX, e.offsetY);
-//         mousePosX = e.offsetX;
-//         mousePosY = e.offsetY;
-//     }
-// });
-
-// //Add mousemove
-// canvas.addEventListener("mousemove", (e) => {
-//     if (drawing == true) {
-//         pencil(ctx, a, b, e.offsetX, e.offsetY);
-//         mousePosX = e.offsetX;
-//         mousePosY = e.offsetY;
-//     }
-// });
+app.get("/city/:cityName", req, res) {
+const cityName = req.params.cityName;
+console.log("req.params.cityName;", req.params.cityName);
+if(cityName.toLowercase() =)
+}

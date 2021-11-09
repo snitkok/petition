@@ -1,0 +1,32 @@
+      <div class="tab-content">
+        <div id="signup">   
+          <h1>Sign Up</h1>
+              {{>errorM}}
+          <form method="post">
+          
+          <div class="top-row">
+            <div class="field-wrap">
+              <label>
+               Age<span class="req">*</span>
+              </label>
+              <input type="text" required autocomplete="off" name="age" min="" max=""/>
+            </div>
+        
+            <div class="field-wrap">
+              <label>
+               City<span class="req">*</span>
+              </label>
+              <input type="text"required autocomplete="off" name="city"/>
+            </div>
+          </div>
+
+          <div class="field-wrap">
+            <label>
+            URL<span class="req">*</span>
+            </label>
+            <input type="email"required autocomplete="off" name="url"/>
+          </div>
+          
+          <button type="submit" class="button"/>Get Started</button>
+          
+          </form>
