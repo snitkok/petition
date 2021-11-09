@@ -68,7 +68,7 @@ app.get("/thanks", (req, res) => {
         console.log("req.session.signatureId", req.session.signatureId);
         Promise.all([
             db.totalNum(),
-            db.selectSignature(req.session.signatureId), //// change here to req.session.userId????
+            db.selectSignature(req.session.signatureId),
         ])
             .then((val) => {
                 console.log("val in GET /Thanks ************************", val);
@@ -154,18 +154,22 @@ app.get("/login", (req, res) => {
 
 app.post("/login", (req, res) => {
     console.log("req.body /login***************", req.body);
-    //here db.checkSign() //Part4
+    //Part4
     const { email, password } = req.body;
-    db.selectEmail(email)
+    db.selectEmail(email) ///signature id
         .then((val) => {
-            console.log("val", val.rows[0].password);
+            console.log("val", val.rows[0]);
             compare(password, val.rows[0].password)
                 .then((match) => {
                     console.log("are the passwords a match??? ==>", match);
                     if (match) {
-                        //here db.checkSign() //Part4
                         req.session.userId = val.rows[0].id;
-                        res.redirect("/petition");
+                        req.session.signatureId = val.rows[0].sig_id;
+                        if (req.session.signatureId) {
+                            res.redirect("/thanks");
+                        } else {
+                            res.redirect("/thanks");
+                        }
                     } else {
                         res.render("login", {
                             layout: "main",
@@ -202,11 +206,17 @@ app.post("/profile", (req, res) => {
         })
         .catch((err) => {
             console.log("Error in POST/profile.....", err),
-            res.render("profile", {
-                layout: "main",
-                unvalidData: true,
-            });
+                res.render("profile", {
+                    layout: "main",
+                    unvalidData: true,
+                });
         });
+});
+
+//GET signers route
+
+app.get("/signers/:city", (req, res) => {
+    const city = req.params.city;
 });
 
 //Log out

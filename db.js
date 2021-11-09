@@ -21,19 +21,15 @@ module.exports.insertSignatureName = (userId, userSignature) => {
 //     return db.query(q);
 // };
 
-
 module.exports.selectFirstandLast = () => {
-    const q = `SELECT first, last FROM users`; //from users PART2
+    const q = `SELECT users.first, users.last, profiles.age, profiles.city, profiles.url
+    FROM signatures
+    JOIN users 
+    ON users.id = signatures.user_id
+    LEFT JOIN profiles 
+    ON users.id = profiles.user_id`;
     return db.query(q);
 };
-
-
-
-
-
-
-
-
 
 //COUNT(*) returns the number of rows in a specified table, and it preserves duplicate rows.( SQL COUNT function to get the number of items in a group)
 
@@ -67,11 +63,15 @@ module.exports.insertRegisterData = (
 
 module.exports.selectEmail = (val) => {
     //don't forget to add an argument here
-    const q = `SELECT password, id FROM users
+    const q = `SELECT users.password, users.id, signatures.id AS sig_id
+    FROM users
+    LEFT JOIN signatures
+    ON users.id = signatures.user_id
     WHERE email = $1`;
     const params = [val];
     return db.query(q, params);
 };
+
 
 //New queries part 4
 module.exports.addProfile = (userID, userAge, userCity, userUrl) => {
@@ -80,14 +80,5 @@ module.exports.addProfile = (userID, userAge, userCity, userUrl) => {
                 RETURNING id`;
 
     const params = [userID, userAge, userCity, userUrl];
-    return db.query(q, params);
-};
-
-//No need for it in part 4
-
-module.exports.checkSign = (userId) => {
-    const q = `SELECT * FROM signatures
-    WHERE user_id = $1`;
-    const params = [userId];
     return db.query(q, params);
 };
