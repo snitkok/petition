@@ -33,21 +33,6 @@ app.use((req, res, next) => {
     next();
 });
 
-//Does not work
-
-// app.get("/petition", (req, res) => {
-//     db.checkSign(req.session.signatureId) //added this part here || req.session.signatureId???
-//         .then(() => {
-//             res.redirect("/thanks");
-//         })
-//         .catch((err) => {
-//             console.log("err in GET/petition", err);
-//             res.render("petition", {
-//                 layout: "main",
-//             });
-//         });
-// });
-
 app.get("/petition", (req, res) => {
     if (req.session.signatureId) {
         res.redirect("/thanks");
@@ -87,7 +72,10 @@ app.get("/thanks", (req, res) => {
         ])
             .then((val) => {
                 console.log("val in GET /Thanks ************************", val);
-                console.log("val[0].rows in GET /Thanks ************************", val[0].rows);
+                console.log(
+                    "val[0].rows in GET /Thanks ************************",
+                    val[0].rows
+                );
                 res.render("thanks", {
                     layout: "main",
                     total: val[0].rows[0].count,
@@ -141,7 +129,7 @@ app.post("/register", (req, res) => {
                 .then((val) => {
                     req.session.userId = val.rows[0].id;
                     console.log("val*******************", val);
-                    res.redirect("/petition");
+                    res.redirect("/profile"); //changed redirection here
                 })
                 .catch((err) => {
                     console.log("Error in insertRegisterData", err);
@@ -166,6 +154,7 @@ app.get("/login", (req, res) => {
 
 app.post("/login", (req, res) => {
     console.log("req.body /login***************", req.body);
+    //here db.checkSign() //Part4
     const { email, password } = req.body;
     db.selectEmail(email)
         .then((val) => {
@@ -197,13 +186,28 @@ app.post("/login", (req, res) => {
         });
 });
 
+//Profile routes
+app.get("/profile", (req, res) => {
+    res.render("profile", {
+        layout: "main",
+    });
+});
 
-//New routes
-
-// get the user's stored hashed password from the db using the user's email address
-// pass the hashed password to COMPARE along with the password the user typed in the input field
-// if they match, COMPARE returns a boolean value of TRUE
-// store the userid in a cookie
+app.post("/profile", (req, res) => {
+    const newuserId = req.session.userId;
+    const { age, city, url } = req.body;
+    db.addProfile(newuserId, age, city, url)
+        .then(() => {
+            res.redirect("/petition");
+        })
+        .catch((err) => {
+            console.log("Error in POST/profile.....", err),
+            res.render("profile", {
+                layout: "main",
+                unvalidData: true,
+            });
+        });
+});
 
 //Log out
 app.get("/logout", (req, res) => {
