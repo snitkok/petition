@@ -16,11 +16,6 @@ module.exports.insertSignatureName = (userId, userSignature) => {
     return db.query(q, params);
 };
 
-// module.exports.selectFirstandLast = () => {
-//     const q = `SELECT first, last FROM users`; //from users PART2
-//     return db.query(q);
-// };
-
 module.exports.selectFirstandLast = () => {
     const q = `SELECT users.first, users.last, profiles.age, profiles.city, profiles.url
     FROM signatures
@@ -72,7 +67,6 @@ module.exports.selectEmail = (val) => {
     return db.query(q, params);
 };
 
-
 //New queries part 4
 module.exports.addProfile = (userID, userAge, userCity, userUrl) => {
     const q = `INSERT INTO profiles (user_id, age, city, url)
@@ -80,5 +74,17 @@ module.exports.addProfile = (userID, userAge, userCity, userUrl) => {
                 RETURNING id`;
 
     const params = [userID, userAge, userCity, userUrl];
+    return db.query(q, params);
+};
+
+module.exports.selectCity = (val) => {
+    const q = `SELECT users.first, users.last, profiles.age, profiles.city, profiles.url
+    FROM signatures
+    JOIN users 
+    ON users.id = signatures.user_id
+    LEFT JOIN profiles 
+    ON users.id = profiles.user_id
+    WHERE LOWER(profiles.city) = LOWER($1)`;
+    const params = [val];
     return db.query(q, params);
 };

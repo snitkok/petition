@@ -206,10 +206,10 @@ app.post("/profile", (req, res) => {
         })
         .catch((err) => {
             console.log("Error in POST/profile.....", err),
-                res.render("profile", {
-                    layout: "main",
-                    unvalidData: true,
-                });
+            res.render("profile", {
+                layout: "main",
+                unvalidData: true,
+            });
         });
 });
 
@@ -217,6 +217,23 @@ app.post("/profile", (req, res) => {
 
 app.get("/signers/:city", (req, res) => {
     const city = req.params.city;
+    db.selectCity(city)
+        .then((val) => {
+            console.log("val////////////////", val);
+            const { rows } = val;
+            res.render("city", {
+                layout: "main",
+                city: city,
+                rows,
+            });
+        })
+        .catch((err) => {
+            console.log("Error in GET//signers/:city.....", err),
+            res.render("signers", {
+                layout: "main",
+                unvalidData: true,
+            });
+        });
 });
 
 //Log out

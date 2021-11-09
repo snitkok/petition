@@ -1,8 +1,9 @@
 <div>People who signed the petition
+        {{>errorM}}
     {{#rows}}
         <li>
             {{first}}
             {{last}}{{age}}
-            <a href="/city">{{city}}</a></li>
+            <a href="/signers/{{city}}">{{city}}</a></li>
     {{/rows}}
 </div>
