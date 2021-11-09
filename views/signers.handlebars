@@ -2,8 +2,14 @@
         {{>errorM}}
     {{#rows}}
         <li>
+         {{#if url}}
+            <a href="{{url}}">{{first}}
+            {{last}}</a>
+        {{else}}
             {{first}}
-            {{last}}{{age}}
+            {{last}}
+        {{/if}}
+            {{age}}
             <a href="/signers/{{city}}">{{city}}</a></li>
     {{/rows}}
 </div>

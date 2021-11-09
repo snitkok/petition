@@ -198,18 +198,30 @@ app.get("/profile", (req, res) => {
 });
 
 app.post("/profile", (req, res) => {
+    //check if the user provided a valid url
     const newuserId = req.session.userId;
-    const { age, city, url } = req.body;
+    let { age, city, url } = req.body;
+    if (!url.startsWith("https://") || !url.startsWith("http://")) {
+        console.log("Error in POST/profile if statement.....");
+        return res.render("profile", {
+            layout: "main",
+            unvalidData: true,
+        });
+    }
+    if (!age) {
+        age = null;
+    }
+
     db.addProfile(newuserId, age, city, url)
         .then(() => {
             res.redirect("/petition");
         })
         .catch((err) => {
             console.log("Error in POST/profile.....", err),
-            res.render("profile", {
-                layout: "main",
-                unvalidData: true,
-            });
+                res.render("profile", {
+                    layout: "main",
+                    unvalidData: true,
+                });
         });
 });
 
@@ -229,10 +241,10 @@ app.get("/signers/:city", (req, res) => {
         })
         .catch((err) => {
             console.log("Error in GET//signers/:city.....", err),
-            res.render("signers", {
-                layout: "main",
-                unvalidData: true,
-            });
+                res.render("signers", {
+                    layout: "main",
+                    unvalidData: true,
+                });
         });
 });
 
