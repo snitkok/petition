@@ -4,6 +4,8 @@ const hb = require("express-handlebars");
 const db = require("./db.js");
 const cookieSession = require("cookie-session");
 const { hash, compare } = require("./bc.js");
+const { COOKIE_SECRET } =
+    process.env.COOKIE_SECRET || require("secrets.json").COOKIE_SECRET;
 
 if (process.env.NODE_ENV == "production") {
     app.use((req, res, next) => {
@@ -12,7 +14,7 @@ if (process.env.NODE_ENV == "production") {
         }
         res.redirect(`https://${req.hostname}${req.url}`);
     });
-}git 
+}
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
 
@@ -20,7 +22,7 @@ app.use(express.static("./public"));
 
 app.use(
     cookieSession({
-        secret: `I'm always happy.`,
+        secret: COOKIE_SECRET,
         maxAge: 1000 * 60 * 60 * 24 * 14,
         sameSite: true,
     })
