@@ -4,8 +4,8 @@ const hb = require("express-handlebars");
 const db = require("./db.js");
 const cookieSession = require("cookie-session");
 const { hash, compare } = require("./bc.js");
-const { COOKIE_SECRET } =
-    process.env.COOKIE_SECRET || require("secrets.json").COOKIE_SECRET;
+const COOKIE_SECRET =
+    process.env.COOKIE_SECRET || require("./secrets.json").COOKIE_SECRET;
 
 if (process.env.NODE_ENV == "production") {
     app.use((req, res, next) => {
