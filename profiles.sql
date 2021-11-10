@@ -2,8 +2,8 @@
   
   CREATE TABLE profiles(
       id SERIAL PRIMARY KEY,
-       user_id UNIQUE INTEGER NOT NULL REFERENCES  users(id),
-       age INT,
+       user_id  INTEGER NOT NULL UNIQUE REFERENCES users(id),
+       age INTEGER CONSTRAINT,
        city TEXT,
        url TEXT
 

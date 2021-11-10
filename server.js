@@ -303,6 +303,7 @@ app.post("/profile/edit", (req, res) => {
     let userUpdatePromise;
 
     if (password) {
+        console.log("inside //POST /profile/edit if statement ##############");
         userUpdatePromise = hash(password).then((hashedPW) => {
             return db.updateUserwithpassword({
                 userId,
@@ -313,6 +314,7 @@ app.post("/profile/edit", (req, res) => {
             });
         });
     } else {
+        console.log();
         return (userUpdatePromise = db.updateUser({
             userId,
             first,
@@ -328,6 +330,7 @@ app.post("/profile/edit", (req, res) => {
         db.upsertProfile({ userId, age, city, url }),
     ])
         .then(() => {
+            console.log("Inside of the then()");
             return res.redirect("/thanks");
         })
         .catch((err) => {
@@ -353,7 +356,7 @@ app.post("/profile/edit", (req, res) => {
 
 // POST /thanks/delete
 
-app.get("/thanks/delete", (req, res) => {
+app.post("/signature/delete", (req, res) => {
     const { userId } = req.session.userId;
 
     db.deleteSig(userId)
