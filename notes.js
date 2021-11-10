@@ -65,7 +65,7 @@ create a variable holding if(){}
 
 let UpdateUserPromise;
 if(password){
-    UpdateUserPromise = bc.hash(password).then(() => {db.UpdateUserwithpassword});
+    UpdateUserPromise = bc.hash(password).then((val) => {db.UpdateUserwithpassword()});
 } else{
 //update user without password
 }

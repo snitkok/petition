@@ -2,44 +2,45 @@
           <h1>Update your  profile!</h1>
               {{>errorM}}
           <form  method="post">
+              {{#rows}}
               <div class="field-wrap">
               <label>
                 First Name<span class="req">*</span>
               </label>
-              <input type="text"   autocomplete="off" name="firstname"/>
+              <input type="text"   autocomplete="off" name="firstname" value="{{first}}"/>
             </div>
         
             <div class="field-wrap">
               <label>
                 Last Name<span class="req">*</span>
               </label>
-              <input type="text"  autocomplete="off" name="lastname"/>
+              <input type="text"  autocomplete="off" name="lastname" value="{{last}}"/>
             </div>
           </div>
             <div class="field-wrap">
             <label>
               Email Address<span class="req">*</span>
             </label>
-            <input type="email" autocomplete="off" name="email"/>
+            <input type="email" autocomplete="off" name="email" value="{{email}}"/>
           </div>
           <div class="field-wrap">
             <label>
            Password<span class="req">*</span>
             </label>
-            <input type="password"  autocomplete="off" name="password"/>
+            <input type="password"  autocomplete="off" name="password" value="password"/>
           </div>
               <div class="field-wrap">
               <label>
                Age<span class="req">*</span>
               </label>
-              <input type="text" autocomplete="off" name="age" min="" max=""/>
+              <input type="text" autocomplete="off" name="age" min="18" value="{{age}}"/>
             </div>
         
             <div class="field-wrap">
               <label>
                City<span class="req">*</span>
               </label>
-              <input type="text" autocomplete="off" name="city"/>
+              <input type="text" autocomplete="off" name="city" value="{{city}}"/>
             </div>
           </div>
 
@@ -47,8 +48,9 @@
             <label>
             URL<span class="req">*</span>
             </label>
-            <input type="url" autocomplete="off" name="url"/>
+            <input type="url" autocomplete="off" name="url" value="{{url}}"/>
           </div>
+            {{/rows}}
               <button type="submit" class="button"/>Update</button>
           </form>
 

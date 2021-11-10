@@ -70,8 +70,8 @@ module.exports.selectEmail = (val) => {
 //New queries part 4
 module.exports.addProfile = (userID, userAge, userCity, userUrl) => {
     const q = `INSERT INTO profiles (user_id, age, city, url)
-                VALUES($1, $2, $3, $4)
-                RETURNING id`;
+   VALUES($1, $2, $3, $4)
+   RETURNING id`;
 
     const params = [userID, userAge, userCity, userUrl];
     return db.query(q, params);
@@ -86,5 +86,50 @@ module.exports.selectCity = (val) => {
     ON users.id = profiles.user_id
     WHERE LOWER(profiles.city) = LOWER($1)`;
     const params = [val];
+    return db.query(q, params);
+};
+
+//New queries part 4
+
+module.exports.selectUserInfo = (val) => {
+    //don't forget to add an argument here
+    const q = `SELECT  users.first, users.last, users.email, users.password, profiles.age, profiles.city, profiles.url 
+    FROM users
+    LEFT JOIN profiles
+    ON users.id = profiles.user_id
+    WHERE users.id = $1`;
+    const params = [val];
+    return db.query(q, params);
+};
+
+module.exports.updateUserwithpassword = (
+    userId,
+    first,
+    last,
+    email,
+    password
+) => {
+    const q = `UPDATE users SET first = $2, last = $3, email = $4, password = $5 WHERE users.id = $1`;
+    const params = [userId, first, last, email, password];
+    return db.query(q, params);
+};
+
+module.exports.updateUser = ({userId, first, last, email}) => {
+    const q = `UPDATE users SET first = $2, last = $3, email = $4, 
+    WHERE users.id = $1`;
+    const params = [userId, first, last, email];
+    return db.query(q, params);
+};
+
+module.exports.upsertProfile = ({userId, age, city, url}) => {
+    const q = `INSERT INTO profiles (user_id, age, city, url) VALUES($1, $2, $3, $4)
+  ON CONFLICT (user_id) DO UPDATE SET age = $2, city = $3, url= $4;`;
+    const params = [userId, age, city, url];
+    return db.query(q, params);
+};
+
+module.exports.deleteSig = (userId) => {
+    const q = `DELETE FROM signatures WHERE user_id = $1`;
+    const params = [userId];
     return db.query(q, params);
 };

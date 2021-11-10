@@ -4,6 +4,7 @@ const hb = require("express-handlebars");
 const db = require("./db.js");
 const cookieSession = require("cookie-session");
 const { hash, compare } = require("./bc.js");
+const { decodeBase64 } = require("bcryptjs");
 const COOKIE_SECRET =
     process.env.COOKIE_SECRET || require("./secrets.json").COOKIE_SECRET;
 
@@ -47,10 +48,12 @@ app.use((req, res, next) => {
 app.get("/petition", (req, res) => {
     if (req.session.signatureId) {
         res.redirect("/thanks");
-    } else {
+    } else if (req.session.userId) {
         res.render("petition", {
             layout: "main",
         });
+    } else {
+        res.redirect("/login");
     }
 });
 
@@ -270,6 +273,99 @@ app.get("/signers/:city", (req, res) => {
                     layout: "main",
                     unvalidData: true,
                 });
+        });
+});
+
+//GET /profile/edit
+app.get("/profile/edit", (req, res) => {
+    const { userId } = req.session;
+    db.selectUserInfo(userId)
+        .then((val) => {
+            const { rows } = val;
+            res.render("edit", {
+                layout: "main",
+                rows,
+            });
+        })
+        .catch((err) => {
+            res.render("edit", {
+                layout: "main",
+            });
+        });
+});
+
+//POST /profile/edit
+
+app.post("/profile/edit", (req, res) => {
+    const { first, last, email, password, age, city, url } = req.body;
+    const { userId } = req.session;
+
+    let userUpdatePromise;
+
+    if (password) {
+        userUpdatePromise = hash(password).then((hashedPW) => {
+            return db.updateUserwithpassword({
+                userId,
+                first,
+                last,
+                email,
+                hashedPW,
+            });
+        });
+    } else {
+        return (userUpdatePromise = db.updateUser({
+            userId,
+            first,
+            last,
+            email,
+        }));
+    }
+
+    console.log("password check done!!!!!!!!!!!!!!!!!");
+
+    Promise.all([
+        userUpdatePromise,
+        db.upsertProfile({ userId, age, city, url }),
+    ])
+        .then(() => {
+            return res.redirect("/thanks");
+        })
+        .catch((err) => {
+            console.log("error in POST /profile/edit", err);
+            return db
+                .selectUserInfo(userId)
+                .then((val) => {
+                    const { rows } = val;
+                    res.render("edit", {
+                        layout: "main",
+                        rows,
+                        unvalidData: true,
+                    });
+                })
+                .catch((err) => {
+                    console.log("err", err);
+                    return res.render("edit", {
+                        layout: "main",
+                    });
+                });
+        });
+});
+
+// POST /thanks/delete
+
+app.get("/thanks/delete", (req, res) => {
+    const { userId } = req.session.userId;
+
+    db.deleteSig(userId)
+        .then(() => {
+            req.session.signatureId = null;
+            res.redirect("/petition");
+        })
+        .catch((err) => {
+            console.log("error in POST /thanks/delete", err);
+            res.render("thanks", {
+                error: "TRY again!",
+            });
         });
 });
 
