@@ -56,3 +56,8 @@ footer {
     position: absolute;
     bottom: 0;
 }
+
+button {
+    width: 150px;
+    height: 35px;
+}

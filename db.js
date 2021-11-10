@@ -2,9 +2,10 @@ const spicedPg = require("spiced-pg");
 const dbUsername = "postgres";
 const dbUserPassword = "postgres";
 const database = "myPetition";
-
+\
 const db = spicedPg(
-    `postgres:${dbUsername}:${dbUserPassword}@localhost:5432/${database}`
+    process.env.DATABASE_URL ||
+        `postgres:${dbUsername}:${dbUserPassword}@localhost:5432/${database}`
 );
 console.log("[db] Connecting to:", database);
 

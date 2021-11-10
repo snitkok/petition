@@ -1,0 +1,55 @@
+<div id="login">   
+          <h1>Update your  profile!</h1>
+              {{>errorM}}
+          <form  method="post">
+              <div class="field-wrap">
+              <label>
+                First Name<span class="req">*</span>
+              </label>
+              <input type="text"   autocomplete="off" name="firstname"/>
+            </div>
+        
+            <div class="field-wrap">
+              <label>
+                Last Name<span class="req">*</span>
+              </label>
+              <input type="text"  autocomplete="off" name="lastname"/>
+            </div>
+          </div>
+            <div class="field-wrap">
+            <label>
+              Email Address<span class="req">*</span>
+            </label>
+            <input type="email" autocomplete="off" name="email"/>
+          </div>
+          <div class="field-wrap">
+            <label>
+           Password<span class="req">*</span>
+            </label>
+            <input type="password"  autocomplete="off" name="password"/>
+          </div>
+              <div class="field-wrap">
+              <label>
+               Age<span class="req">*</span>
+              </label>
+              <input type="text" autocomplete="off" name="age" min="" max=""/>
+            </div>
+        
+            <div class="field-wrap">
+              <label>
+               City<span class="req">*</span>
+              </label>
+              <input type="text" autocomplete="off" name="city"/>
+            </div>
+          </div>
+
+          <div class="field-wrap">
+            <label>
+            URL<span class="req">*</span>
+            </label>
+            <input type="url" autocomplete="off" name="url"/>
+          </div>
+              <button type="submit" class="button"/>Update</button>
+          </form>
+
+          

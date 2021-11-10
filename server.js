@@ -114,9 +114,15 @@ app.get("/signers", (req, res) => {
 app.get("/", (req, res) => res.redirect("/register"));
 
 app.get("/register", (req, res) => {
-    res.render("register", {
-        layout: "main",
-    });
+    if (req.session.signatureId && req.session.userId) {
+        res.redirect("/thanks");
+    } else if (req.session.userId) {
+        res.redirect("/petition");
+    } else {
+        res.render("register", {
+            layout: "main",
+        });
+    }
 });
 
 app.post("/register", (req, res) => {
@@ -147,16 +153,22 @@ app.post("/register", (req, res) => {
 
 //Log In routes
 app.get("/login", (req, res) => {
-    res.render("login", {
-        layout: "main",
-    });
+    if (req.session.signatureId && req.session.userId) {
+        res.redirect("/thanks");
+    } else if (req.session.userId) {
+        res.redirect("/petition");
+    } else {
+        res.render("login", {
+            layout: "main",
+        });
+    }
 });
 
 app.post("/login", (req, res) => {
     console.log("req.body /login***************", req.body);
     //Part4
     const { email, password } = req.body;
-    db.selectEmail(email) ///signature id
+    db.selectEmail(email)
         .then((val) => {
             console.log("val", val.rows[0]);
             compare(password, val.rows[0].password)
@@ -168,7 +180,7 @@ app.post("/login", (req, res) => {
                         if (req.session.signatureId) {
                             res.redirect("/thanks");
                         } else {
-                            res.redirect("/thanks");
+                            res.redirect("/petition");
                         }
                     } else {
                         res.render("login", {
@@ -201,7 +213,9 @@ app.post("/profile", (req, res) => {
     //check if the user provided a valid url
     const newuserId = req.session.userId;
     let { age, city, url } = req.body;
-    if (!url.startsWith("https://") || !url.startsWith("http://")) {
+    if (url && !url.startsWith("https://")) {
+        //Why if I add || !url.startsWith("http://") it stops working
+        url = "https://" + url;
         console.log("Error in POST/profile if statement.....");
         return res.render("profile", {
             layout: "main",
@@ -254,4 +268,6 @@ app.get("/logout", (req, res) => {
     res.redirect("/login");
 });
 
-app.listen(8080, () => console.log("Petition server, listening 🦻"));
+app.listen(process.env.PORT || 8080, () =>
+    console.log("Petition server, listening 🦻")
+);
