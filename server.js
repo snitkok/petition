@@ -4,6 +4,15 @@ const hb = require("express-handlebars");
 const db = require("./db.js");
 const cookieSession = require("cookie-session");
 const { hash, compare } = require("./bc.js");
+
+if (process.env.NODE_ENV == "production") {
+    app.use((req, res, next) => {
+        if (req.headers["x-forwarded-proto"].startsWith("https")) {
+            return next();
+        }
+        res.redirect(`https://${req.hostname}${req.url}`);
+    });
+}git 
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
 
