@@ -80,3 +80,77 @@ Promise.all([
                error: "TRy again!" 
             })
         })
+
+
+        ///11.11
+
+        function notLoggedIn(req, res, next){
+            if(req.session.userId){
+                return res.redirect("/petition")
+
+            }
+            next();
+        }
+
+
+ function LoggedIn(req, res, next){
+            if(!req.session.userId){
+                return res.redirect("/register")
+
+            }
+            next();
+        }
+
+
+ function signedPet(req, res, next){
+            if(req.session.signatureId){
+                return res.redirect("/thanks")
+
+            }
+            next();
+        }
+
+         function notsignedPet(req, res, next){
+            if(req.session.signatureId){
+                return res.redirect("/petition")
+
+            }
+            next();
+        }
+
+
+        function logRequest(eq, res, next){
+            req.
+        };
+
+
+        //create middleware
+        //with authorization.js with this functions
+
+        module.exports = {logRequest};
+
+        //require in server.js
+
+        cont{logRequest} = require;
+
+
+        ///routes
+        //crrate routers folder
+        1. const express = rrquire("express");
+
+        const router = express.Router();
+
+        const{requireNotLoggedIN} = require(middleware)
+
+        router.get("/login", requireNotLoggedIN, (req, res) => {
+            res.send(<h1>Something</h1>)
+        })
+
+        //at hte end
+
+        module.exports(authRouter)
+
+        //Import them in server to js
+        //connect them to the applictaion
+        app.use("/auth", requireNotLoggedIN, authRouter);
+        // we can add requireNotLoggedIN in here and delete from routes

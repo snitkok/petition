@@ -246,10 +246,10 @@ app.post("/profile", (req, res) => {
         })
         .catch((err) => {
             console.log("Error in POST/profile.....", err),
-                res.render("profile", {
-                    layout: "main",
-                    unvalidData: true,
-                });
+            res.render("profile", {
+                layout: "main",
+                unvalidData: true,
+            });
         });
 });
 
@@ -269,10 +269,10 @@ app.get("/signers/:city", (req, res) => {
         })
         .catch((err) => {
             console.log("Error in GET//signers/:city.....", err),
-                res.render("signers", {
-                    layout: "main",
-                    unvalidData: true,
-                });
+            res.render("signers", {
+                layout: "main",
+                unvalidData: true,
+            });
         });
 });
 
@@ -297,8 +297,21 @@ app.get("/profile/edit", (req, res) => {
 //POST /profile/edit
 
 app.post("/profile/edit", (req, res) => {
-    const { first, last, email, password, age, city, url } = req.body;
+    let { first, last, email, password, age, city, url } = req.body;
     const { userId } = req.session;
+    console.log("***********req.body**********", req.body);
+
+    if (url && !url.startsWith("https://")) {
+        url = "https://" + url;
+        console.log("Error in POST/profile if statement.....");
+        return res.render("profile", {
+            layout: "main",
+            unvalidData: true,
+        });
+    }
+    if (!age) {
+        age = null;
+    }
 
     let userUpdatePromise;
 
@@ -315,12 +328,12 @@ app.post("/profile/edit", (req, res) => {
         });
     } else {
         console.log();
-        return (userUpdatePromise = db.updateUser({
+        userUpdatePromise = db.updateUser({
             userId,
             first,
             last,
             email,
-        }));
+        });
     }
 
     console.log("password check done!!!!!!!!!!!!!!!!!");
@@ -334,30 +347,22 @@ app.post("/profile/edit", (req, res) => {
             return res.redirect("/thanks");
         })
         .catch((err) => {
-            console.log("error in POST /profile/edit", err);
-            return db
-                .selectUserInfo(userId)
-                .then((val) => {
-                    const { rows } = val;
-                    res.render("edit", {
-                        layout: "main",
-                        rows,
-                        unvalidData: true,
-                    });
-                })
-                .catch((err) => {
-                    console.log("err", err);
-                    return res.render("edit", {
-                        layout: "main",
-                    });
+            console.log("WE HAVE AN ERROR", err);
+            return db.selectUserInfo(userId).then((val) => {
+                const { rows } = val;
+                res.render("edit", {
+                    layout: "main",
+                    rows,
+                    unvalidData: true,
                 });
+            });
         });
 });
 
 // POST /thanks/delete
 
 app.post("/signature/delete", (req, res) => {
-    const { userId } = req.session.userId;
+    const { userId } = req.session;
 
     db.deleteSig(userId)
         .then(() => {

@@ -3,47 +3,49 @@
               {{>errorM}}
           <form  method="post">
               {{#rows}}
+              {{!-- FIRST NAME --}}
               <div class="field-wrap">
               <label>
                 First Name<span class="req">*</span>
               </label>
-              <input type="text"   autocomplete="off" name="firstname" value="{{first}}"/>
+              <input type="text"   autocomplete="off" name="first" value="{{first}}"/>
             </div>
-        
+              {{!-- LAST NAME --}}
             <div class="field-wrap">
               <label>
                 Last Name<span class="req">*</span>
               </label>
-              <input type="text"  autocomplete="off" name="lastname" value="{{last}}"/>
+              <input type="text"  autocomplete="off" name="last" value="{{last}}"/>
             </div>
-          </div>
+             {{!-- EMAIL --}}
             <div class="field-wrap">
-            <label>
+             <label>
               Email Address<span class="req">*</span>
-            </label>
-            <input type="email" autocomplete="off" name="email" value="{{email}}"/>
+             </label>
+             <input type="email" autocomplete="off" name="email" value="{{email}}"/>
           </div>
+                {{!-- PASSWORD --}}
           <div class="field-wrap">
             <label>
            Password<span class="req">*</span>
             </label>
-            <input type="password"  autocomplete="off" name="password" value="password"/>
+            <input type="password"  autocomplete="off" name="password" placeholder="● ● ● ● ● ●"/>
           </div>
+              {{!-- AGE --}}
               <div class="field-wrap">
               <label>
                Age<span class="req">*</span>
               </label>
-              <input type="text" autocomplete="off" name="age" min="18" value="{{age}}"/>
+              <input autocomplete="off" name="age" value="{{age}}"/>
             </div>
-        
+          {{!-- CITY --}}
             <div class="field-wrap">
               <label>
                City<span class="req">*</span>
               </label>
               <input type="text" autocomplete="off" name="city" value="{{city}}"/>
             </div>
-          </div>
-
+             {{!-- URL --}}
           <div class="field-wrap">
             <label>
             URL<span class="req">*</span>
