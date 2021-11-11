@@ -5,6 +5,12 @@ const db = require("./db.js");
 const cookieSession = require("cookie-session");
 const { hash, compare } = require("./bc.js");
 const { decodeBase64 } = require("bcryptjs");
+const {
+    requireNotLoggedIn,
+    requireLoggedIn,
+    requiredSigned,
+    requiredNotSigned,
+} = require("./middleware/stats.js");
 const COOKIE_SECRET =
     process.env.COOKIE_SECRET || require("./secrets.json").COOKIE_SECRET;
 
@@ -18,9 +24,7 @@ if (process.env.NODE_ENV == "production") {
 }
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
-
 app.use(express.static("./public"));
-
 app.use(
     cookieSession({
         secret: COOKIE_SECRET,
@@ -45,16 +49,11 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get("/petition", (req, res) => {
-    if (req.session.signatureId) {
-        res.redirect("/thanks");
-    } else if (req.session.userId) {
-        res.render("petition", {
-            layout: "main",
-        });
-    } else {
-        res.redirect("/login");
-    }
+//------------------------------------------ ROUTES -------------------------------------
+app.get("/petition", requiredNotSigned, requireLoggedIn, (req, res) => {
+    res.render("petition", {
+        layout: "main",
+    });
 });
 
 app.post("/petition", (req, res) => {
@@ -77,66 +76,49 @@ app.post("/petition", (req, res) => {
         });
 });
 
-app.get("/thanks", (req, res) => {
-    if (req.session.signatureId) {
-        console.log("req.session.signatureId", req.session.signatureId);
-        Promise.all([
-            db.totalNum(),
-            db.selectSignature(req.session.signatureId),
-        ])
-            .then((val) => {
-                console.log("val in GET /Thanks ************************", val);
-                console.log(
-                    "val[0].rows in GET /Thanks ************************",
-                    val[0].rows
-                );
-                res.render("thanks", {
-                    layout: "main",
-                    total: val[0].rows[0].count,
-                    userSig: val[1].rows[0].signature,
-                });
-            })
-            .catch((err) => {
-                console.log("Error in  db.totalNum, db.selectSignature", err);
+app.get("/thanks", requiredSigned, (req, res) => {
+    console.log("req.session.signatureId", req.session.signatureId);
+    Promise.all([db.totalNum(), db.selectSignature(req.session.signatureId)])
+        .then((val) => {
+            console.log("val in GET /Thanks ************************", val);
+            console.log(
+                "val[0].rows in GET /Thanks ************************",
+                val[0].rows
+            );
+            res.render("thanks", {
+                layout: "main",
+                total: val[0].rows[0].count,
+                userSig: val[1].rows[0].signature,
             });
-    } else {
-        res.redirect("/petition");
-    }
+        })
+        .catch((err) => {
+            console.log("Error in  db.totalNum, db.selectSignature", err);
+        });
 });
 
-app.get("/signers", (req, res) => {
-    if (req.session.signatureId) {
-        db.selectFirstandLast()
-            .then((val) => {
-                const { rows } = val;
-                console.log("rows", rows);
-                res.render("signers", {
-                    layout: "main",
-                    rows,
-                });
-            })
-            .catch((err) => {
-                console.log("Error in  selectFirstandLast", err);
+app.get("/signers", requiredSigned, (req, res) => {
+    db.selectFirstandLast()
+        .then((val) => {
+            const { rows } = val;
+            console.log("rows", rows);
+            res.render("signers", {
+                layout: "main",
+                rows,
             });
-    } else {
-        res.redirect("/petition");
-    }
+        })
+        .catch((err) => {
+            console.log("Error in  selectFirstandLast", err);
+        });
 });
 
 //Register routs
 
 app.get("/", (req, res) => res.redirect("/register"));
 
-app.get("/register", (req, res) => {
-    if (req.session.signatureId && req.session.userId) {
-        res.redirect("/thanks");
-    } else if (req.session.userId) {
-        res.redirect("/petition");
-    } else {
-        res.render("register", {
-            layout: "main",
-        });
-    }
+app.get("/register", requireLoggedIn, requiredSigned, (req, res) => {
+    res.render("profile", {
+        layout: "main",
+    });
 });
 
 app.post("/register", (req, res) => {
@@ -166,16 +148,8 @@ app.post("/register", (req, res) => {
 });
 
 //Log In routes
-app.get("/login", (req, res) => {
-    if (req.session.signatureId && req.session.userId) {
-        res.redirect("/thanks");
-    } else if (req.session.userId) {
-        res.redirect("/petition");
-    } else {
-        res.render("login", {
-            layout: "main",
-        });
-    }
+app.get("/login", requiredSigned, requireLoggedIn, (req, res) => {
+    res.redirect("/thanks");
 });
 
 app.post("/login", (req, res) => {
