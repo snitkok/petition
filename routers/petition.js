@@ -9,16 +9,25 @@ const {
 //############################################################################### PETITION ROUTES
 
 router.get("/petition", requiredNotSigned, requireLoggedIn, (req, res) => {
-    res.render("petition", {
-        layout: "main",
-    });
+    db.selectUserInfo(req.session.userId)
+        .then((val) => {
+            const { rows } = val;
+            res.render("petition", {
+                layout: "main",
+                rows,
+            });
+        })
+        .catch((err) => {
+            console.log("Error in get petition", err);
+        });
 });
 
-router.post("/petition", (req, res) => {
+router.post("/petition", requiredNotSigned, requireLoggedIn, (req, res) => {
     const { signature } = req.body; //get the user id out of the cookie
     console.log("req.body POST/petition-----------------", req.body);
     const newuserId = req.session.userId;
     console.log("userId********", newuserId);
+
     db.insertSignatureName(newuserId, signature)
         .then((val) => {
             req.session.signatureId = val.rows[0].id;
@@ -27,10 +36,18 @@ router.post("/petition", (req, res) => {
         })
         .catch((err) => {
             console.log("Error in insertSignatureName", err);
-            res.render("petition", {
-                layout: "main",
-                unvalidData: true,
-            });
+            db.selectUserInfo(req.session.userId)
+                .then((val) => {
+                    const { rows } = val;
+                    res.render("petition", {
+                        layout: "main",
+                        rows,
+                        unvalidData: true,
+                    });
+                })
+                .catch((err) => {
+                    console.log("Error in post petition", err);
+                });
         });
 });
 

@@ -1,21 +1,36 @@
 <h2>Please sign our petition</h2>
-<div class="wrapper">
+<div class="grid-container">
+    <div id="forwrapper"  class="item1">
 <form
     method="POST"
-    style="display: flex; flex-direction: column; justify-content: space-between; width: 40%; height: 50%;"
+
     class="item1"
 
-
+>
     {{>errorM}}
 
-    <canvas id="canvas" ></canvas>
+    <canvas id="canvas" width="500" height="450"></canvas>
     <input type="hidden" name="signature" id="signature"/>
-    <div>
-        <span>Sign here </span>
-    </div>
-    <button> submit </button>
-    
+
+    <div><button> Submit </button></div>
+ 
+
 </form>
- </div>
- <form action="/profile/edit"><button>Edit profile</button></form>
+
+<div><button id="autoSig">Generate signature</button></div>
+
+<button onclick="window.location.href='/petition';">Clear Canvas</button>
+
+</div>
+
+<img src="/Flat Colorful Illustration Cashless Payment Instagram Story.png" class="item2" id="imagePet" width="450" height="650">
+
+
+{{#rows}}
+<input type="hidden" id="firstandlast" value="{{first}}{{last}}"/>
+{{/rows}}
+
+
+</div>
+
 <script src="/script.js"></script>

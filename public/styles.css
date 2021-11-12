@@ -1,48 +1,44 @@
 * {
     box-sizing: border-box;
+    background-color: #fff8ea;
 }
 
-form {
-    display: grid;
-}
 body {
-    background-color: #decec8;
-    color: #154042;
+    color: #002677;
     position: relative;
+    background-color: #fff8ea;
 }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 10px;
+    padding: 10px;
+}
+
+.item1 {
+    grid-column: 1;
+    grid-row: 1;
+}
+.item2 {
+    grid-column: 2 / span 2;
+}
+
 
 #canvas {
-    border: 5px solid #4d1635;
+    border: 5px solid #73bfff;
     border-style: dotted;
-    width: 340px;
-    height: 200px;
 }
 
 #imageSign {
-    border: 5px solid #4d1635;
+    border: 5px solid #73bfff;
     border-style: dotted;
     width: 340px;
     height: 200px;
 }
 
-.wrapper {
-    display: grid;
-    gap: 10px;
-    grid-auto-rows: 100px;
-    grid-template-areas:
-        "a b"
-        "a b";
-}
-.item1 {
-    grid-area: a;
-    padding: 0.3em;
-}
-.item2 {
-    grid-area: b;
-    align-self: start;
-}
-
-form input,
+/* form input,
 form div,
 form button {
     margin: 13px;
@@ -55,9 +51,12 @@ form div {
 footer {
     position: absolute;
     bottom: 0;
-}
+} */
 
 button {
     width: 150px;
     height: 35px;
+    background-color: #00d9a7;
+    margin: 10px;
+    border: none;
 }
