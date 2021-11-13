@@ -2,40 +2,44 @@
         <div id="signup">   
           <h1>Sign Up</h1>
               {{>errorM}}
-          <form method="post">
-          
-          <div class="top-row">
+              <div class="grid-container" id="register">
+          <form method="post" class="item1" id="registerform">
+ 
             <div class="field-wrap">
               <label>
                 First Name<span class="req">*</span>
-              </label>
+              </label><br>
+
               <input type="text" required autocomplete="off" name="firstname"/>
             </div>
         
             <div class="field-wrap">
               <label>
                 Last Name<span class="req">*</span>
-              </label>
+              </label><br>
               <input type="text"required autocomplete="off" name="lastname"/>
             </div>
-          </div>
 
           <div class="field-wrap">
             <label>
               Email Address<span class="req">*</span>
-            </label>
-            <input type="email"required autocomplete="off" name="email"/>
+            </label><br>
+            <input type="email" required autocomplete="off" name="email"/>
           </div>
           
           <div class="field-wrap">
             <label>
               Set A Password<span class="req">*</span>
-            </label>
+            </label><br>
             <input type="password"required autocomplete="off" name="password"/>
           </div>
           
           <button type="submit" class="button"/>Get Started</button>
-          
+             <div>Already have an account?<a href="/login"> Log In</a></div>
           </form>
+       
 
-          <div>Already have an account?<a href="/login"> Log In</a></div>
+          <img src="/Flat Colorful Illustration Cashless Payment Instagram Story.png" class="item2" id="imagePet" width="450" height="650">
+   </div>
+
+              

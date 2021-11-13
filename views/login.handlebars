@@ -1,23 +1,26 @@
 <div id="login">   
-          <h1>Welcome Back!</h1>
+           <h1>Welcome Back!</h1>
               {{>errorM}}
-          
-          <form  method="post">
-          
+    <div class="grid-container" id="login"> 
+          <form  method="post" class="item1" id="loginform">  
+         
             <div class="field-wrap">
             <label>
               Email Address<span class="req">*</span>
-            </label>
+            </label><br>
             <input type="email"required autocomplete="off" name="email"/>
           </div>
           <div class="field-wrap">
             <label>
            Password<span class="req">*</span>
-            </label>
+            </label><br>
             <input type="password"required autocomplete="off" name="password"/>
           </div>
 
               <button type="submit" class="button"/>Log In</button>
+              <div>Don't have an account yet?<a href="/register"> Register</a></div>
           </form>
+          <img src="/Flat Colorful Illustration Cashless Payment Instagram Story.png" class="item2" id="imagePet" width="450" height="650">
+</div>
 
-           <div>Don't have an account yet?<a href="/register"> Register</a></div>
+           

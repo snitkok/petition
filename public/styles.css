@@ -9,22 +9,29 @@ body {
     background-color: #fff8ea;
 }
 
+div#formwrapper.item1 {
+    justify-items: center;
+    align-items: center;
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     grid-gap: 10px;
     padding: 10px;
+    justify-items: center;
+    align-items: center;
 }
 
 .item1 {
     grid-column: 1;
     grid-row: 1;
+    text-align: center;
 }
 .item2 {
     grid-column: 2 / span 2;
 }
-
 
 #canvas {
     border: 5px solid #73bfff;
@@ -46,17 +53,81 @@ form button {
 
 form div {
     font-size: 22px;
-}
+} */
 
 footer {
     position: absolute;
     bottom: 0;
-} */
+}
+
+#autoSig {
+    margin-bottom: 15px;
+}
+
+#clear {
+    background-color: #fb4747;
+}
+
+#submit {
+    margin-top: 15px;
+    background-color: #ffc84d;
+}
 
 button {
-    width: 150px;
     height: 35px;
+    width: 230px;
     background-color: #00d9a7;
-    margin: 10px;
     border: none;
+    margin: 20px 10px;
+}
+
+/* Register form */
+#register.grid-container,
+#login.grid-conteiner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    padding: 10px;
+}
+
+#registerform.item1,
+#loginform.item1 {
+    justify-self: start;
+    align-self: center;
+    margin: 20px;
+    font-size: 36px;
+}
+
+input {
+    height: 35px;
+    width: 250px;
+    font-size: 20px;
+}
+
+#imagePet.item2 {
+    justify-self: start;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+/* Edit */
+
+#edit label {
+    font-size: 30px;
+}
+
+#edit.grid-conteiner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    padding: 10px;
+}
+
+#editform.item1 {
+    justify-self: start;
+    align-self: center;
+    margin: 20px;
+    font-size: 36px;
 }

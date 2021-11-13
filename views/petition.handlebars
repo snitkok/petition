@@ -1,6 +1,7 @@
 <h2>Please sign our petition</h2>
 <div class="grid-container">
-    <div id="forwrapper"  class="item1">
+    <div id="formwrapper"  class="item1">
+
 <form
     method="POST"
 
@@ -8,18 +9,19 @@
 
 >
     {{>errorM}}
-
+    <div><button id="submit"> Submit </button></div>
     <canvas id="canvas" width="500" height="450"></canvas>
     <input type="hidden" name="signature" id="signature"/>
 
-    <div><button> Submit </button></div>
+
  
 
 </form>
 
-<div><button id="autoSig">Generate signature</button></div>
 
-<button onclick="window.location.href='/petition';">Clear Canvas</button>
+
+<div><button id="autoSig">Generate signature</button></div>
+<button onclick="window.location.href='/petition';" id="clear">Clear Canvas</button>
 
 </div>
 

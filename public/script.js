@@ -51,11 +51,10 @@
     let firstAndLast = document.getElementById("firstandlast").value;
 
     document.getElementById("autoSig").addEventListener("click", function () {
-        ctx.font = "60px Brush Script MT";
-        ctx.fillText(firstAndLast, 40, 150);
+        ctx.font = "60px Bradley Hand";
+        ctx.fillStyle = "#fb4747";
+        ctx.fillText(firstAndLast, 40, 220);
         const signatureUrl = canvas.toDataURL();
         signature.value = signatureUrl;
     });
-
-
 })();

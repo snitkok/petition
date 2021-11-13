@@ -1,59 +1,63 @@
-<div id="login">   
+<div id="edit">   
           <h1>Update your  profile!</h1>
               {{>errorM}}
-          <form  method="post">
+
+         <div class="grid-container"> 
+          <form  method="post" class="item1" id="editform">  
               {{#rows}}
               {{!-- FIRST NAME --}}
               <div class="field-wrap">
               <label>
                 First Name<span class="req">*</span>
-              </label>
+              </label><br>
               <input type="text"   autocomplete="off" name="first" value="{{first}}"/>
             </div>
               {{!-- LAST NAME --}}
             <div class="field-wrap">
               <label>
                 Last Name<span class="req">*</span>
-              </label>
+              </label><br>
               <input type="text"  autocomplete="off" name="last" value="{{last}}"/>
             </div>
              {{!-- EMAIL --}}
             <div class="field-wrap">
              <label>
               Email Address<span class="req">*</span>
-             </label>
+             </label><br>
              <input type="email" autocomplete="off" name="email" value="{{email}}"/>
           </div>
                 {{!-- PASSWORD --}}
           <div class="field-wrap">
             <label>
            Password<span class="req">*</span>
-            </label>
+            </label><br>
             <input type="password"  autocomplete="off" name="password" placeholder="● ● ● ● ● ●"/>
           </div>
               {{!-- AGE --}}
               <div class="field-wrap">
               <label>
                Age<span class="req">*</span>
-              </label>
+              </label><br>
               <input autocomplete="off" name="age" value="{{age}}"/>
             </div>
           {{!-- CITY --}}
             <div class="field-wrap">
               <label>
                City<span class="req">*</span>
-              </label>
+              </label><br>
               <input type="text" autocomplete="off" name="city" value="{{city}}"/>
             </div>
              {{!-- URL --}}
           <div class="field-wrap">
             <label>
             URL<span class="req">*</span>
-            </label>
+            </label><br>
             <input type="url" autocomplete="off" name="url" value="{{url}}"/>
           </div>
             {{/rows}}
               <button type="submit" class="button"/>Update</button>
           </form>
 
-          
+            <img src="/Flat Colorful Illustration Cashless Payment Instagram Story.png" class="item2" id="imagePet" width="450" height="650">
+            </div>
+</div>
