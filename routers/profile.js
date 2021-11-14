@@ -2,7 +2,7 @@ const express = require("express");
 const db = require("../db.js");
 const { hash, compare } = require("../bc.js");
 const router = express.Router();
-const { requireLoggedIn } = require("../middleware/stats.js");
+const { requireLoggedIn, requiredSigned } = require("../middleware/stats.js");
 
 //---------------------------------------------------------------------------GET /profile/
 router.get("/profile", requireLoggedIn, (req, res) => {
@@ -12,7 +12,7 @@ router.get("/profile", requireLoggedIn, (req, res) => {
 });
 
 //----------------------------------------------------------------------------POST /profile/
-router.post("/profile", (req, res) => {
+router.post("/profile", requiredSigned, (req, res) => {
     const newuserId = req.session.userId;
     let { age, city, url } = req.body;
     if (url && !url.startsWith("https://")) {
@@ -33,10 +33,10 @@ router.post("/profile", (req, res) => {
         })
         .catch((err) => {
             console.log("Error in POST/profile.....", err),
-                res.render("profile", {
-                    layout: "main",
-                    unvalidData: true,
-                });
+            res.render("profile", {
+                layout: "main",
+                unvalidData: true,
+            });
         });
 });
 
@@ -53,9 +53,9 @@ router.get("/profile/edit", requireLoggedIn, (req, res) => {
         })
         .catch((err) => {
             console.log("Error in GET/profile.....", err),
-                res.render("edit", {
-                    layout: "main",
-                });
+            res.render("edit", {
+                layout: "main",
+            });
         });
 });
 

@@ -67,7 +67,7 @@ button {
 
 #registerform.item1,
 #loginform.item1 {
-    justify-self: start;
+    justify-self: center;
     align-self: center;
     margin: 20px;
     font-size: 36px;
@@ -142,14 +142,14 @@ a#logout:hover {
 }
 
 h2 {
-    font-size: 30px;
+    font-size: 40px;
 }
 
 /* Thanks */
 
 div#thanks {
     width: 50%;
-    height: 35%;
+    height: 50%;
     margin: 0 auto;
     text-align: center;
   
@@ -157,7 +157,7 @@ div#thanks {
 #imageSign {
     border: 5px solid #73bfff;
     border-style: dotted;
-    width: 75%;
+    width: 65%;
     height: 50%;
 }
 

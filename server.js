@@ -49,15 +49,12 @@ app.use((req, res, next) => {
     next();
 });
 
-
-
 app.use(authRouter);
 app.use(profileRouter);
 app.use(petitionRouter);
 app.use(signersRouter);
 app.use(thanksRouter);
 app.use(deleteRouter);
-
 
 app.listen(process.env.PORT || 8080, () =>
     console.log("Petition server, listening 🦻")
