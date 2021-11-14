@@ -33,15 +33,15 @@ router.post("/profile", requiredSigned, (req, res) => {
         })
         .catch((err) => {
             console.log("Error in POST/profile.....", err),
-            res.render("profile", {
-                layout: "main",
-                unvalidData: true,
-            });
+                res.render("profile", {
+                    layout: "main",
+                    unvalidData: true,
+                });
         });
 });
 
 //----------------------------------------------------------------------------GET /profile/edit
-router.get("/profile/edit", requireLoggedIn, (req, res) => {
+router.get("/profile/edit", (req, res) => {
     const { userId } = req.session;
     db.selectUserInfo(userId)
         .then((val) => {
@@ -53,9 +53,9 @@ router.get("/profile/edit", requireLoggedIn, (req, res) => {
         })
         .catch((err) => {
             console.log("Error in GET/profile.....", err),
-            res.render("edit", {
-                layout: "main",
-            });
+                res.render("edit", {
+                    layout: "main",
+                });
         });
 });
 
