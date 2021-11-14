@@ -1,5 +1,7 @@
-<div>
-    <div>These people from {{city}} have signed the petition</div>
+<a href="/logout" id="logout">Log out</a><br>
+<div id="city">
+    <div>These people from <span class="twocol">{{city}}</span>
+        have signed the petition</div>
     {{#rows}}
         <li>
             {{first}}
@@ -7,5 +9,5 @@
             {{age}}
         </li>
     {{/rows}}
-
+<button onclick="window.location.href='/signers';">Go Back</button>
 </div>

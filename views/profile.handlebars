@@ -1,36 +1,37 @@
-      <div class="tab-content">
-        <div id="signup">   
-          <h1>Some data</h1>
+            <a href="/logout" id="logout">Log out</a><br>
+<div class="grid-container">
+    <div id="pofileform"  class="item1">
+          <h1>Tell us more about yourself</h1>
               {{>errorM}}
-          <form method="post">
+          <form method="post" id="profile">
           
-          <div class="top-row">
+          
             <div class="field-wrap">
               <label>
                Age<span class="req">*</span>
-              </label>
+              </label><br>
               <input type="text" autocomplete="off" name="age" min="" max=""/>
             </div>
         
             <div class="field-wrap">
               <label>
                City<span class="req">*</span>
-              </label>
+              </label><br>
               <input type="text" autocomplete="off" name="city"/>
             </div>
-          </div>
-
+ 
           <div class="field-wrap">
             <label>
             URL<span class="req">*</span>
-            </label>
+            </label><br>
             <input type="url" autocomplete="off" name="url"/>
           </div>
           
           <button type="submit" class="button"/>Submit</button>
 
-      
-          
           </form>
-
-<button onclick="window.location.href='/petition';">Skip</button>
+          
+          <button onclick="window.location.href='/petition';">Skip</button>
+</div>
+<img src="/profile.png" class="item2" id="imagePet" >
+</div>

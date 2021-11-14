@@ -37,7 +37,7 @@
     let pencil = (event) => {
         ctx.beginPath();
         ctx.strokeStyle = "#fb4747";
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 5;
         ctx.lineCap = "round";
         ctx.moveTo(coord.x, coord.y);
         changePosition(event);
@@ -46,6 +46,7 @@
         // ctx.closePath();
     };
 
+
     //Add text to canvas
 
     let firstAndLast = document.getElementById("firstandlast").value;
@@ -53,7 +54,7 @@
     document.getElementById("autoSig").addEventListener("click", function () {
         ctx.font = "60px Bradley Hand";
         ctx.fillStyle = "#fb4747";
-        ctx.fillText(firstAndLast, 40, 220);
+        ctx.fillText(firstAndLast, 100, 250);
         const signatureUrl = canvas.toDataURL();
         signature.value = signatureUrl;
     });

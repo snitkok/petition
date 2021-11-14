@@ -33,10 +33,10 @@ router.post("/profile", (req, res) => {
         })
         .catch((err) => {
             console.log("Error in POST/profile.....", err),
-            res.render("profile", {
-                layout: "main",
-                unvalidData: true,
-            });
+                res.render("profile", {
+                    layout: "main",
+                    unvalidData: true,
+                });
         });
 });
 
@@ -52,9 +52,10 @@ router.get("/profile/edit", requireLoggedIn, (req, res) => {
             });
         })
         .catch((err) => {
-            res.render("edit", {
-                layout: "main",
-            });
+            console.log("Error in GET/profile.....", err),
+                res.render("edit", {
+                    layout: "main",
+                });
         });
 });
 

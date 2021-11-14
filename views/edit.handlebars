@@ -1,9 +1,11 @@
+<a href="/logout" id="logout">Log out</a><br>
 <div id="edit">   
-          <h1>Update your  profile!</h1>
+      
               {{>errorM}}
 
          <div class="grid-container"> 
-          <form  method="post" class="item1" id="editform">  
+          <form  method="post" class="item1" id="editform">
+            <h1>Update your  profile!</h1> 
               {{#rows}}
               {{!-- FIRST NAME --}}
               <div class="field-wrap">
@@ -55,9 +57,12 @@
             <input type="url" autocomplete="off" name="url" value="{{url}}"/>
           </div>
             {{/rows}}
-              <button type="submit" class="button"/>Update</button>
+              <button type="submit" class="button"/>Update</button><br>
+               <button onclick="window.location.href='/thanks';">Go Back</button>
           </form>
 
-            <img src="/Flat Colorful Illustration Cashless Payment Instagram Story.png" class="item2" id="imagePet" width="450" height="650">
+            <img src="/profile.png" class="item2" id="imagePet">
             </div>
+
+            
 </div>

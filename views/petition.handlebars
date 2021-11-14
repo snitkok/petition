@@ -1,31 +1,20 @@
-<h2>Please sign our petition</h2>
+<a href="/logout" id="logout">Log out</a><br>
 <div class="grid-container">
-    <div id="formwrapper"  class="item1">
-
-<form
-    method="POST"
-
-    class="item1"
-
->
-    {{>errorM}}
-    <div><button id="submit"> Submit </button></div>
-    <canvas id="canvas" width="500" height="450"></canvas>
-    <input type="hidden" name="signature" id="signature"/>
-
-
- 
-
-</form>
-
-
-
+<div id="petitionform"  class="item1">
+<h2>Please sign our petition and support our demand to end discrimination based on payment method. All people should have access to services, regardless of their payment preferences.</h2>
 <div><button id="autoSig">Generate signature</button></div>
-<button onclick="window.location.href='/petition';" id="clear">Clear Canvas</button>
 
+
+<form method="POST">
+    {{>errorM}}
+    <canvas id="canvas" width="700" height="500"></canvas>
+    <input type="hidden" name="signature" id="signature"/>
+<div><button id="submit"> Submit </button></div>
+</form>
+<button onclick="window.location.href='/petition';" id="clear">Clear Canvas</button>
 </div>
 
-<img src="/Flat Colorful Illustration Cashless Payment Instagram Story.png" class="item2" id="imagePet" width="450" height="650">
+<img src="/petition.png" class="item2" id="imagePet" >
 
 
 {{#rows}}

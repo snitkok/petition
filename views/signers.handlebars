@@ -1,4 +1,6 @@
-<div>People who signed the petition
+<a href="/logout" id="logout">Log out</a><br>
+
+<div id="signers"><h3 class="multicolor">  People who signed the petition</h3>
         {{>errorM}}
     {{#rows}}
         <li>
@@ -12,4 +14,6 @@
             {{age}}
             <a href="/signers/{{city}}">{{city}}</a></li>
     {{/rows}}
+
+    <button onclick="window.location.href='/thanks';">Go Back</button>
 </div>
