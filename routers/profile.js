@@ -12,7 +12,7 @@ router.get("/profile", requireLoggedIn, (req, res) => {
 });
 
 //----------------------------------------------------------------------------POST /profile/
-router.post("/profile", requiredSigned, (req, res) => {
+router.post("/profile", (req, res) => {
     const newuserId = req.session.userId;
     let { age, city, url } = req.body;
     if (url && !url.startsWith("https://")) {
@@ -29,14 +29,15 @@ router.post("/profile", requiredSigned, (req, res) => {
 
     db.addProfile(newuserId, age, city, url)
         .then(() => {
+            console.log("Profile info added....."),
             res.redirect("/petition");
         })
         .catch((err) => {
             console.log("Error in POST/profile.....", err),
-                res.render("profile", {
-                    layout: "main",
-                    unvalidData: true,
-                });
+            res.render("profile", {
+                layout: "main",
+                unvalidData: true,
+            });
         });
 });
 
@@ -53,9 +54,9 @@ router.get("/profile/edit", (req, res) => {
         })
         .catch((err) => {
             console.log("Error in GET/profile.....", err),
-                res.render("edit", {
-                    layout: "main",
-                });
+            res.render("edit", {
+                layout: "main",
+            });
         });
 });
 
